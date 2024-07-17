@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,8 +26,8 @@ public class Notification implements Serializable {
 	@Column(columnDefinition = "BIGINT DEFAULT users.n_next_id()", insertable = false, updatable = false)
 	private long id;
 	
-	@Column(nullable = false, updatable = false, length = 160)
-	private String content;
+	@Column(length = 160)
+	private String resource;
 	
 	@Column(columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
 	private boolean read;
@@ -35,47 +38,28 @@ public class Notification implements Serializable {
 	@Column(columnDefinition = "VARCHAR(512)")
 	private URI uri;
 	
-	private String additionalResource;
-	
-	@Column(nullable = false, updatable = false, length = 29)
+	@Column(nullable = false, updatable = false, length = 23)
 	@Enumerated(EnumType.STRING)
 	private NotificationType notificationType;
 	
+	@JsonIgnoreProperties(value = {"notifications"}, allowSetters = true)
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "recipient_id")
 	private User recipient;
+	
+	@JsonIncludeProperties({"username", "name", "userPhotoPath"})
+	@ManyToOne
+	@JoinColumn(name = "actor_id")
+	private User actor;
 
 	public Notification() {
 		
 	}
 
-	public Notification(long id, String content, boolean read, long createdAt, URI uri, String additionalResource,
+	public Notification(long id, String resource, boolean read, long createdAt, URI uri, User actor,
 			NotificationType notificationType, User recipient) {
 		this.id = id;
-		this.content = content;
-		this.read = read;
-		this.createdAt = createdAt;
-		this.uri = uri;
-		this.additionalResource = additionalResource;
-		this.notificationType = notificationType;
-		this.recipient = recipient;
-	}
-
-	public Notification(long id, String content, boolean read, long createdAt, String additionalResource,
-			NotificationType notificationType, User recipient) {
-		this.id = id;
-		this.content = content;
-		this.read = read;
-		this.createdAt = createdAt;
-		this.additionalResource = additionalResource;
-		this.notificationType = notificationType;
-		this.recipient = recipient;
-	}
-
-	public Notification(long id, String content, boolean read, long createdAt, URI uri,
-			NotificationType notificationType, User recipient) {
-		this.id = id;
-		this.content = content;
+		this.resource = resource;
 		this.read = read;
 		this.createdAt = createdAt;
 		this.uri = uri;
@@ -83,10 +67,21 @@ public class Notification implements Serializable {
 		this.recipient = recipient;
 	}
 
-	public Notification(long id, String content, boolean read, long createdAt, NotificationType notificationType,
+	public Notification(long id, String resource, boolean read, long createdAt, URI uri,
+			NotificationType notificationType, User recipient) {
+		this.id = id;
+		this.resource = resource;
+		this.read = read;
+		this.createdAt = createdAt;
+		this.uri = uri;
+		this.notificationType = notificationType;
+		this.recipient = recipient;
+	}
+
+	public Notification(long id, String resource, boolean read, long createdAt, NotificationType notificationType,
 			User recipient) {
 		this.id = id;
-		this.content = content;
+		this.resource = resource;
 		this.read = read;
 		this.createdAt = createdAt;
 		this.notificationType = notificationType;
@@ -101,12 +96,12 @@ public class Notification implements Serializable {
 		this.id = id;
 	}
 
-	public String getContent() {
-		return content;
+	public String getResource() {
+		return resource;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 
 	public boolean isRead() {
@@ -149,12 +144,12 @@ public class Notification implements Serializable {
 		this.notificationType = notificationType;
 	}
 
-	public String getAdditionalResource() {
-		return additionalResource;
+	public User getActor() {
+		return actor;
 	}
 
-	public void setAdditionalResource(String additionalResource) {
-		this.additionalResource = additionalResource;
+	public void setActor(User actor) {
+		this.actor = actor;
 	}
 
 	@Override
