@@ -35,7 +35,10 @@ public class Credential implements Serializable {
 	@Column(nullable = false)
 	private String password;
 	
-	@JsonIncludeProperties({"username", "credential"})
+	@Column(columnDefinition = "BOOLEAN DEFAULT FALSE", insertable = false, nullable = false)
+	private boolean isEmailVerified;
+	
+	@JsonIncludeProperties({"username", "name"})
 	@OneToOne
 	@JoinColumn(name = "user_id", nullable = false, unique = true)
 	private User user;
@@ -51,6 +54,14 @@ public class Credential implements Serializable {
 		this.user = user;
 	}
 	
+	public Credential(long id, String email, String password, boolean isEmailVerified, User user) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.isEmailVerified = isEmailVerified;
+		this.user = user;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -73,6 +84,14 @@ public class Credential implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isEmailVerified() {
+		return isEmailVerified;
+	}
+
+	public void setEmailVerified(boolean isEmailVerified) {
+		this.isEmailVerified = isEmailVerified;
 	}
 
 	@Override
