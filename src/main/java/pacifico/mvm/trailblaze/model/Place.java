@@ -13,11 +13,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
 @Entity
-@Table(schema = "places", indexes = @Index(name = "lat_lon", columnList = "latitude, longitude", unique = true))
+@Table(
+		schema = "places", 
+		indexes = {
+				@Index(name = "idx_lat_lon", columnList = "latitude, longitude"),
+				@Index(name = "idx_name", columnList = "name")
+		},
+		uniqueConstraints = @UniqueConstraint(name = "unique_lat_lon_name", columnNames = {"latitude", "longitude", "name"})
+)
 public class Place implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,6 +41,9 @@ public class Place implements Serializable {
 	@Min(-180) @Max(180)
 	@Column(precision = 9, scale = 6, nullable = false)
 	private BigDecimal longitude;
+	
+	@Column(length = 90)
+	private String name;
 	
 	@JsonIgnoreProperties({"place"})
 	@OneToMany(mappedBy = "place")
@@ -52,6 +63,13 @@ public class Place implements Serializable {
 		this.longitude = longitude;
 	}
 	
+	public Place(long id, BigDecimal latitude, BigDecimal longitude, String name) {
+		this.id = id;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.name = name;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -74,6 +92,14 @@ public class Place implements Serializable {
 
 	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<Rate> getRates() {
