@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.IndexColumn;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -44,6 +46,14 @@ public class Place implements Serializable {
 	
 	@Column(length = 90)
 	private String name;
+	
+	@Min(0)	
+	@Column(columnDefinition = "INT DEFAULT 0")
+	private int postCount;
+	
+	@Min(0)
+	@Column(columnDefinition = "INT DEFAULT 0")
+	private int rateCount;
 	
 	@JsonIgnoreProperties({"place"})
 	@OneToMany(mappedBy = "place")

@@ -29,16 +29,16 @@ public class Comment implements Serializable {
 	@Column(columnDefinition = "BIGINT DEFAULT posts.c_next_id()", insertable = false, updatable = false)
 	private long id;
 	
-	@Column(length = 500, updatable = false, nullable = false)
+	@Column(length = 450, updatable = false, nullable = false)
 	private String content;
 	
 	@Min(0)	
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long likes;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int likes;
 	
 	@Min(0)
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long dislikes;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int dislikes;
 	
 	@Column(columnDefinition = "BIGINT DEFAULT get_now()", insertable = false, nullable = false, updatable = false)
 	private long createdAt;
@@ -86,7 +86,7 @@ public class Comment implements Serializable {
 		this.rootComment = rootComment;
 	}
 	
-	public Comment(long id, String content, long likes, long dislikes, long createdAt, User user,
+	public Comment(long id, String content, int likes, int dislikes, long createdAt, User user,
 			Post post) {
 		this.id = id;
 		this.content = content;
@@ -98,7 +98,7 @@ public class Comment implements Serializable {
 		this.rootComment = null;
 	}
 
-	public Comment(long id, String content, long likes, long dislikes, long createdAt, User user,
+	public Comment(long id, String content, int likes, int dislikes, long createdAt, User user,
 			Post post, Comment rootComment) {
 		this.id = id;
 		this.content = content;
@@ -126,19 +126,19 @@ public class Comment implements Serializable {
 		this.content = content;
 	}
 
-	public long getLikes() {
+	public int getLikes() {
 		return likes;
 	}
 
-	public void setLikes(long likes) {
+	public void setLikes(int likes) {
 		this.likes = likes;
 	}
 
-	public long getDislikes() {
+	public int getDislikes() {
 		return dislikes;
 	}
 
-	public void setDislikes(long dislikes) {
+	public void setDislikes(int dislikes) {
 		this.dislikes = dislikes;
 	}
 

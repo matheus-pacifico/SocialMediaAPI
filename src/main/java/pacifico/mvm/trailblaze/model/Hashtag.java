@@ -12,10 +12,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Min;
 
 @Entity
-@Table(schema = "posts", indexes = @Index(name = "idx_tag", columnList = "tag", unique = true))
+@Table(
+		schema = "posts", 
+		indexes = @Index(name = "idx_tag", columnList = "tag", unique = true),
+		uniqueConstraints = @UniqueConstraint(name = "unique_post_htag", columnNames = {"post_id", "hashtag_id"})
+)
 public class Hashtag implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +34,7 @@ public class Hashtag implements Serializable {
 	
 	@Min(0)
 	@Column(columnDefinition = "BIGINT DEFAULT 0")
-	private long postCount;
+	private int postCount;
 
 	@ManyToMany
 	@JoinTable(
@@ -38,20 +43,20 @@ public class Hashtag implements Serializable {
 			joinColumns = @JoinColumn(name = "hashtag_id"),
 			inverseJoinColumns = @JoinColumn(name = "post_id"),
 			indexes = {
-					@Index(name = "idx_pst_htag", columnList = "hashtag_id, post_id", unique = true),
+					@Index(name = "idx_post", columnList = "post_id"),
 					@Index(name = "idx_htag", columnList = "hashtag_id")
 			}
 	)
 	private Set<Post> posts;
 
-	public Hashtag(long id, String tag, @Min(0) long postCount, Set<Post> posts) {
+	public Hashtag(long id, String tag, @Min(0) int postCount, Set<Post> posts) {
 		this.id = id;
 		this.tag = tag;
 		this.postCount = postCount;
 		this.posts = posts;
 	}
 
-	public Hashtag(long id, String tag, @Min(0) long postCount) {
+	public Hashtag(long id, String tag, @Min(0) int postCount) {
 		this.id = id;
 		this.tag = tag;
 		this.postCount = postCount;
@@ -77,11 +82,11 @@ public class Hashtag implements Serializable {
 		this.tag = tag;
 	}
 
-	public long getPostCount() {
+	public int getPostCount() {
 		return postCount;
 	}
 
-	public void setPostCount(long postCount) {
+	public void setPostCount(int postCount) {
 		this.postCount = postCount;
 	}
 

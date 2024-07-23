@@ -36,8 +36,8 @@ public class Profile implements Serializable {
 	private Set<Post> posts;
 
 	@Min(0)
-	@Column(insertable = false, nullable = false)
-	private long postCount;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false, nullable = false)
+	private int postCount;
 
 	@JsonIgnoreProperties(value = {"profile",  "birthday", "createdAt", "followers", "followeds"}, allowSetters = true)
 	@OneToOne(optional = false)
@@ -48,14 +48,14 @@ public class Profile implements Serializable {
 		
 	}
 
-	public Profile(long id, String description, boolean isPublic, long postCount) {
+	public Profile(long id, String description, boolean isPublic, int postCount) {
 		this.id = id;
 		this.description = description;
 		this.isPublic = isPublic;
 		this.postCount = postCount;
 	}
 
-	public Profile(long id, String description, boolean isPublic, long postCount, User user) {
+	public Profile(long id, String description, boolean isPublic, int postCount, User user) {
 		this.id = id;
 		this.description = description;
 		this.isPublic = isPublic;
@@ -95,11 +95,11 @@ public class Profile implements Serializable {
 		this.posts = posts;
 	}
 
-	public long getPostCount() {
+	public int getPostCount() {
 		return postCount;
 	}
 
-	public void setPostCount(long postCount) {
+	public void setPostCount(int postCount) {
 		this.postCount = postCount;
 	}
 	

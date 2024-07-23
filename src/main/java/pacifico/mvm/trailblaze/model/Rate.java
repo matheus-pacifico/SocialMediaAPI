@@ -37,12 +37,12 @@ public class Rate implements Serializable {
 	private boolean userWerePresent;
     
 	@Min(0)	
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long likes;	
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int likes;	
 	
 	@Min(0)	
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long dislikes;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int dislikes;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -81,8 +81,8 @@ public class Rate implements Serializable {
 		this.createdAt = createdAt;
 	}
 	
-	public Rate(long id, byte rating, String comment, boolean userWerePresent, long likes,
-			long dislikes, User user, Place place) {
+	public Rate(long id, byte rating, String comment, boolean userWerePresent, int likes,
+			int dislikes, User user, Place place) {
 		this.id = id;
 		this.rating = rating;
 		this.comment = comment;
@@ -93,8 +93,8 @@ public class Rate implements Serializable {
 		this.place = place;
 	}
 
-	public Rate(long id, byte rating, String comment, boolean userWerePresent, long likes,
-			long dislikes, User user, Place place, long createdAt) {
+	public Rate(long id, byte rating, String comment, boolean userWerePresent, int likes,
+			int dislikes, User user, Place place, long createdAt) {
 		this.id = id;
 		this.rating = rating;
 		this.comment = comment;
@@ -146,12 +146,36 @@ public class Rate implements Serializable {
 		this.user = user;
 	}
 
+	public long getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(long createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	public Place getPlace() {
 		return place;
 	}
 
 	public void setPlace(Place place) {
 		this.place = place;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getDislikes() {
+		return dislikes;
+	}
+
+	public void setDislikes(int dislikes) {
+		this.dislikes = dislikes;
 	}
 
 	@Override

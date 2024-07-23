@@ -24,7 +24,13 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 
 @Entity
-@Table(schema = "posts", indexes = @Index(name = "idx_post_code", columnList = "postCode", unique = true))
+@Table(
+		schema = "posts", 
+		indexes = {
+				@Index(name = "idx_post_code", columnList = "postCode", unique = true),
+				@Index(name = "idx_caption_search", columnList = "caption")
+		}
+)
 public class Post implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,22 +47,22 @@ public class Post implements Serializable {
 	@JoinColumn(name = "profile_id", nullable = false, updatable = false)
 	private Profile profile;
 	
-	@Column(length = 600)
+	@Column(length = 700)
 	private String caption;
 	
 	@Min(0)	
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long likeCount;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int likeCount;
 	
 	@Min(0)
-	@Column(columnDefinition = "BIGINT DEFAULT 0", insertable = false)
-	private long commentCount;
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false)
+	private int commentCount;
 	
 	@Column(columnDefinition = "BIGINT DEFAULT get_now()", insertable = false, nullable = false, updatable = false)
 	private long createdAt;
 	
-	@Column(columnDefinition = "BOOLEAN DEFAULT FALSE", insertable = false, nullable = false)
-	private boolean isArchived;
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE", insertable = false, nullable = false)
+	private boolean isNotArchived;
 
 	@ManyToOne
 	@JoinColumn(name = "place_id")
@@ -71,7 +77,7 @@ public class Post implements Serializable {
 	private List<Comment> comments;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "post")
+	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
 	private List<PostLike> postLikes = new ArrayList<>();
 	
 	@JsonIgnore
@@ -82,7 +88,7 @@ public class Post implements Serializable {
 	
 	}
 
-	public Post(long id, String postCode, Profile profile, String caption, long likeCount, long commentCount, long createdAt, boolean isArchived,
+	public Post(long id, String postCode, Profile profile, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
 			Place place) {
 		this.id = id;
 		this.postCode = postCode;
@@ -91,12 +97,12 @@ public class Post implements Serializable {
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
 		this.createdAt = createdAt;
-		this.isArchived = isArchived;
+		this.isNotArchived = isNotArchived;
 		this.place = place;
 		this.medias = null;
 	}
 
-	public Post(long id, String postCode, Profile profile, String caption, long likeCount, long commentCount, long createdAt, boolean isArchived,
+	public Post(long id, String postCode, Profile profile, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
 			Place place, Set<Media> medias) {
 		this.id = id;
 		this.postCode = postCode;
@@ -105,7 +111,7 @@ public class Post implements Serializable {
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
 		this.createdAt = createdAt;
-		this.isArchived = isArchived;
+		this.isNotArchived = isNotArchived;
 		this.place = place;
 		this.medias = medias;
 	}
@@ -142,19 +148,19 @@ public class Post implements Serializable {
 		this.caption = caption;
 	}
 
-	public long getLikeCount() {
+	public int getLikeCount() {
 		return likeCount;
 	}
 
-	public void setLikeCount(long likeCount) {
+	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
 
-	public long getCommentCount() {
+	public int getCommentCount() {
 		return commentCount;
 	}
 
-	public void setCommentCount(long commentCount) {
+	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
 
@@ -190,12 +196,12 @@ public class Post implements Serializable {
 		this.postLikes = postLikes;
 	}
 
-	public boolean isArchived() {
-		return isArchived;
+	public boolean isNotArchived() {
+		return isNotArchived;
 	}
 
-	public void setArchived(boolean isArchived) {
-		this.isArchived = isArchived;
+	public void setNotArchived(boolean isNotArchived) {
+		this.isNotArchived = isNotArchived;
 	}
 
 	public Set<Media> getMedias() {
