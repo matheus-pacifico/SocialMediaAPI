@@ -11,7 +11,7 @@ import pacifico.mvm.constraints.Username;
 */
 public class UsernameValidator implements ConstraintValidator<Username, CharSequence> {
 	
-	//Violation messages
+	// Violation messages
 	private static final String BLANK_USERNAME = "username cannot be blank.";
 	private static final String CHAR_NOT_ALLOWED = "username can only use lowercase letters, numbers, underscores and periods.";
 	private static final String TOO_LONG = "username can be a maximum of 30 characters.";
@@ -23,18 +23,19 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 	
 	private boolean checkReservedWord;
 
-    @Override
-    public void initialize(Username annotation) {
-    	this.checkReservedWord = annotation.checkReservedWord();
+	@Override
+	public void initialize(Username annotation) {
+		this.checkReservedWord = annotation.checkReservedWord();
 	}
     
 	@Override
 	public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
 		if (value == null || value.isEmpty()) {
 			buildConstraintViolationWithTemplate(context, BLANK_USERNAME);
-			 return false;
+			return false;
 		} else if (value.length() > 30) {
 			buildConstraintViolationWithTemplate(context, TOO_LONG);
+			return false;
 		}
 		return !(containsNotAllowedCharacter(value, context) || (checkReservedWord && isReservedWord(value, context)));
 	}
@@ -151,6 +152,7 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 			"list",
 			"lists",
 			"login",
+			"new",
 			"p",
 			"place",
 			"places",
@@ -177,7 +179,6 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 			"twitter",
 			"user",
 			"users",
-			"new",
 			"x")
 		);
 	}

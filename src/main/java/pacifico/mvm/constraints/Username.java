@@ -32,14 +32,14 @@ public @interface Username {
 
 	String message() default "invalid username";
 	
-    Class<?>[] groups() default { };
+	Class<?>[] groups() default { };
 
-    Class<? extends Payload>[] payload() default { };
+	Class<? extends Payload>[] payload() default { };
     
-    /**
-     * Defines whether to check if the username is a reserved word.
-     */
-    boolean checkReservedWord() default false;
+	/**
+	 * Defines whether to check if the username is a reserved word.
+	 */
+	boolean checkReservedWord() default false;
 
 	/**
 	 * Defines several {@code @Username} constraints on the same element.
