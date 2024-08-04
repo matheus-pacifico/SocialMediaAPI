@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.annotations.IndexColumn;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
