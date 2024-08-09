@@ -33,11 +33,15 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 		if (value == null || value.isEmpty()) {
 			buildConstraintViolationWithTemplate(context, BLANK_USERNAME);
 			return false;
-		} else if (value.length() > 30) {
+		}
+		if (value.length() > 30) {
 			buildConstraintViolationWithTemplate(context, TOO_LONG);
 			return false;
 		}
-		return !(containsNotAllowedCharacter(value, context) || (checkReservedWord && isReservedWord(value, context)));
+		if (containsNotAllowedCharacter(value, context)) {
+			return false; 
+		}
+		return !(checkReservedWord && isReservedWord(value));
 	}
 
 	public static boolean containsNotAllowedCharacter(CharSequence str, ConstraintValidatorContext context) {
@@ -45,8 +49,8 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 			return true; 
 		}
 		boolean thisCharIsPrecededByDot = false;
-		int strLenght = str.length();
-		for (int i = 1; i < strLenght; i++) {
+		int strLength = str.length();
+		for (int i = 1; i < strLength; i++) {
 			int ch = str.charAt(i);
 			if (isAllowedAndNotADot(ch)) {
 				thisCharIsPrecededByDot = false;
@@ -94,7 +98,7 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 				|| (ch >= '0' && ch <= '9') || (ch == '.')); 
 	}
 	
-	public static boolean isReservedWord(CharSequence value, ConstraintValidatorContext context) {
+	public static boolean isReservedWord(CharSequence value) {
 		return RESERVED_WORDS.contains(value.toString());
 	}
 	
