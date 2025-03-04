@@ -11,10 +11,10 @@ public class SavedPlaceId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "saved_by_id", nullable = false)
+	@Column(name = "saved_by_id", columnDefinition = "BIGINT", nullable = false)
 	private long savedByUserId;
 
-	@Column(name = "place_id", nullable = false)
+	@Column(name = "place_id", columnDefinition = "BIGINT", nullable = false)
 	private long placeId;
 	
 	public SavedPlaceId() {

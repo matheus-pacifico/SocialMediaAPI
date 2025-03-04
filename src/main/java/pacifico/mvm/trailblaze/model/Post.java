@@ -44,7 +44,7 @@ public class Post implements Serializable {
 	
 	@JsonIgnoreProperties(value = {"description", "posts", "postCount"}, allowSetters = true)	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "profile_id", nullable = false, updatable = false)
+	@JoinColumn(name = "profile_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private Profile profile;
 	
 	@Column(length = 700)
@@ -65,11 +65,11 @@ public class Post implements Serializable {
 	private boolean isNotArchived;
 
 	@ManyToOne
-	@JoinColumn(name = "place_id")
+	@JoinColumn(name = "place_id", columnDefinition = "BIGINT")
 	private Place place;
     
 	@JsonIgnoreProperties(value = {"post"}, allowSetters = true)
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
 	private Set<Media> medias = new HashSet<>();
 	
 	@JsonIgnoreProperties(value = {"post"}, allowSetters = true)

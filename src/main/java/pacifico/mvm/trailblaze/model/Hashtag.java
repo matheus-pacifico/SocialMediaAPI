@@ -18,8 +18,7 @@ import jakarta.validation.constraints.Min;
 @Entity
 @Table(
 		schema = "posts", 
-		indexes = @Index(name = "idx_tag", columnList = "tag", unique = true),
-		uniqueConstraints = @UniqueConstraint(name = "unique_post_htag", columnNames = {"post_id", "hashtag_id"})
+		indexes = @Index(name = "idx_tag", columnList = "tag", unique = true)
 )
 public class Hashtag implements Serializable {
 
@@ -33,19 +32,20 @@ public class Hashtag implements Serializable {
 	private String tag;
 	
 	@Min(0)
-	@Column(columnDefinition = "BIGINT DEFAULT 0")
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int postCount;
 
 	@ManyToMany
 	@JoinTable(
 			schema = "posts",
 			name = "POST_HASHTAG",
-			joinColumns = @JoinColumn(name = "hashtag_id"),
-			inverseJoinColumns = @JoinColumn(name = "post_id"),
+			joinColumns = @JoinColumn(name = "hashtag_id", columnDefinition = "BIGINT"),
+			inverseJoinColumns = @JoinColumn(name = "post_id", columnDefinition = "BIGINT"),
 			indexes = {
 					@Index(name = "idx_post", columnList = "post_id"),
 					@Index(name = "idx_htag", columnList = "hashtag_id")
-			}
+			},
+			uniqueConstraints = @UniqueConstraint(name = "unique_post_htag", columnNames = {"post_id", "hashtag_id"})
 	)
 	private Set<Post> posts;
 

@@ -41,7 +41,7 @@ public class Profile implements Serializable {
 
 	@JsonIgnoreProperties(value = {"profile",  "birthday", "createdAt", "followers", "followeds"}, allowSetters = true)
 	@OneToOne(optional = false)
-	@JoinColumn(name = "user_id", nullable = false, updatable = false)
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private User user;
 
 	public Profile() {

@@ -23,7 +23,7 @@ public final class CommentReport extends AbstractReport implements Serializable 
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "comment_id", nullable = false, updatable = false)
+	@JoinColumn(name = "comment_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private Comment comment;
 
 	public CommentReport() {

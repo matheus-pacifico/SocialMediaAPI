@@ -22,7 +22,7 @@ public final class UserReport extends AbstractReport implements Serializable {
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "reported_user_id", nullable = false, updatable = false)
+	@JoinColumn(name = "reported_user_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private User reportedUser;
 	
 	public UserReport() {

@@ -23,7 +23,7 @@ public final class PostReport extends AbstractReport implements Serializable {
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "post_id", updatable = false, nullable = false)
+	@JoinColumn(name = "post_id", columnDefinition = "BIGINT", updatable = false, nullable = false)
 	private Post post;
 
 	public PostReport() {

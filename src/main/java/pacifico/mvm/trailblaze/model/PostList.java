@@ -34,7 +34,7 @@ public class PostList extends AbstractEntityList implements Serializable {
 	@JoinTable(
 			schema = "posts",
 			name="SAVED_POST_LIST_POST",
-			joinColumns = @JoinColumn(name="post_list_id"),
+			joinColumns = @JoinColumn(name="post_list_id", columnDefinition = "BIGINT"),
 			inverseJoinColumns = {   
 					@JoinColumn(name = "saved_by_id", referencedColumnName = "saved_by_id"),
 					@JoinColumn(name = "post_id", referencedColumnName = "post_id")

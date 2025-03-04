@@ -27,7 +27,7 @@ public class Media implements Serializable {
 	
 	@JsonIgnoreProperties(value = {"medias"}, allowSetters = true)
 	@ManyToOne
-	@JoinColumn(name = "post_id")
+	@JoinColumn(name = "post_id", columnDefinition = "BIGINT")
 	private Post post;
 	
 	public Media() {

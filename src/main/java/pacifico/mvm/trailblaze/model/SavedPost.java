@@ -25,7 +25,7 @@ public class SavedPost implements Serializable {
 	@EmbeddedId
 	private SavedPostId id;
 	
-	@JsonIncludeProperties({"username", "name", "userPhotoPath"})
+	@JsonIncludeProperties({"username", "name", "photoPath"})
 	@ManyToOne
 	@MapsId("savedByUserId")
 	@JoinColumn(name = "saved_by_id")

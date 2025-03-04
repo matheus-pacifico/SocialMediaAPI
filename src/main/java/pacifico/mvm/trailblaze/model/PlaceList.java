@@ -34,7 +34,7 @@ public class PlaceList extends AbstractEntityList implements Serializable {
 	@JoinTable(
 			schema = "places",
 			name="SAVED_PLACE_LIST_PLACE",
-			joinColumns = @JoinColumn(name="place_list_id"),
+			joinColumns = @JoinColumn(name="place_list_id", columnDefinition = "BIGINT"),
 			inverseJoinColumns = {   
 					@JoinColumn(name = "saved_by_id", referencedColumnName = "saved_by_id"),
 					@JoinColumn(name = "place_id", referencedColumnName = "place_id")

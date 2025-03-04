@@ -26,7 +26,7 @@ public abstract class AbstractReport implements Serializable {
 	protected ReportReason reportReason;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_id", nullable = false, updatable = false)
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	protected User user;
 	
 	public AbstractReport() {

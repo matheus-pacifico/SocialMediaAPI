@@ -45,7 +45,7 @@ public class Rate implements Serializable {
 	private int dislikes;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
     
 	@Column(columnDefinition = "BIGINT DEFAULT get_now()", insertable = false, nullable = false)
@@ -53,7 +53,7 @@ public class Rate implements Serializable {
     
 	@JsonIgnoreProperties(value = {"rates", "posts"}, allowSetters = true)
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "place_id")
+	@JoinColumn(name = "place_id", columnDefinition = "BIGINT")
 	private Place place;
     
 	public Rate() {

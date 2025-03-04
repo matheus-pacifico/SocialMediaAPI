@@ -44,12 +44,12 @@ public class Notification implements Serializable {
 	
 	@JsonIgnoreProperties(value = {"notifications"}, allowSetters = true)
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "recipient_id")
+	@JoinColumn(name = "recipient_id", columnDefinition = "BIGINT")
 	private User recipient;
 	
-	@JsonIncludeProperties({"username", "name", "userPhotoPath"})
+	@JsonIncludeProperties({"username", "name", "photoPath"})
 	@ManyToOne
-	@JoinColumn(name = "actor_id")
+	@JoinColumn(name = "actor_id", columnDefinition = "BIGINT")
 	private User actor;
 
 	public Notification() {

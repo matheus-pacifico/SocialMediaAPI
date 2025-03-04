@@ -34,7 +34,7 @@ public class BugReport implements Serializable {
 	private BugType bugType;
 	
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
 
 	public BugReport() {

@@ -44,12 +44,12 @@ public class Comment implements Serializable {
 	private long createdAt;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
     
 	@JsonIgnoreProperties(value = {"comments"}, allowSetters = true)
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "post_id")
+	@JoinColumn(name = "post_id", columnDefinition = "BIGINT")
 	private Post post;
 	
 	@JsonIgnoreProperties(value = {"comment", "user"}, allowSetters = true)
@@ -61,7 +61,7 @@ public class Comment implements Serializable {
 	private List<CommentReport> reports;    
     
 	@ManyToOne
-	@JoinColumn(name = "root_comment_id")
+	@JoinColumn(name = "root_comment_id", columnDefinition = "BIGINT")
 	private Comment rootComment;
 	
 	public Comment() {

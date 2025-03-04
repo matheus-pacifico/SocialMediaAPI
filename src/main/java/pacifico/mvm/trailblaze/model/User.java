@@ -44,7 +44,7 @@ public class User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date birthday;
     
-	private String userPhotoPath;
+	private String photoPath;
 	
 	@Column(columnDefinition = "BIGINT DEFAULT get_now()", insertable = false, nullable = false, updatable = false)
 	private long createdAt;
@@ -117,12 +117,12 @@ public class User implements Serializable {
 		
 	}
 
-	public User(long id, String username, String name, String userPhotoPath, 
+	public User(long id, String username, String name, String photoPath, 
 			long createdAt, Gender gender, Credential credential) {
 		this.id = id;
 		this.username = username;
 		this.name = name;
-		this.userPhotoPath = userPhotoPath;
+		this.photoPath = photoPath;
 		this.createdAt = createdAt;
 		this.gender = gender;
 		this.credential = credential;
@@ -160,12 +160,12 @@ public class User implements Serializable {
 		this.profile = profile;
 	}
 
-	public String getUserPhotoPath() {
-		return userPhotoPath;
+	public String getPhotoPath() {
+		return photoPath;
 	}
 
-	public void setProfilePhotoPath(String userPhotoPath) {
-		this.userPhotoPath = userPhotoPath;
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 	public long getCreatedAt() {
