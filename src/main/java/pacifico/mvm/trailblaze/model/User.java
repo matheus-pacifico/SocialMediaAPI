@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,6 +23,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(schema = "users", name = "\"user\"")
@@ -45,6 +47,9 @@ public class User implements Serializable {
 	private Date birthday;
     
 	private String photoPath;
+
+	@Column(length = 150)
+	private String bio;
 	
 	@Column(columnDefinition = "BIGINT DEFAULT get_now()", insertable = false, nullable = false, updatable = false)
 	private long createdAt;
@@ -52,14 +57,21 @@ public class User implements Serializable {
 	@Column(length = 6)
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE", insertable = false, nullable = false)
+	private boolean isPublic;
+
+	@Min(0)
+	@Column(columnDefinition = "INT DEFAULT 0", insertable = false, nullable = false)
+	private int postCount;
 	
 	@JsonIgnoreProperties(value = {"password", "user"}, allowSetters = true)
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
 	private Credential credential;
-	
+
 	@JsonIgnoreProperties(value = {"user"}, allowSetters = true)
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
-	private Profile profile;
+	@OneToMany(mappedBy = "user")
+	private Set<Post> posts;
 	
 	@JsonIgnoreProperties(value = {"user"}, allowSetters = true)
 	@OneToMany(mappedBy = "user")
@@ -154,14 +166,6 @@ public class User implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
 	}
 
 	public String getPhotoPath() {

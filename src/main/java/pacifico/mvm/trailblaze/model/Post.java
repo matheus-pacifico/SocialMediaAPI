@@ -42,10 +42,10 @@ public class Post implements Serializable {
 	@Column(nullable = false)
 	private String postCode;
 	
-	@JsonIgnoreProperties(value = {"description", "posts", "postCount"}, allowSetters = true)	
+	@JsonIgnoreProperties(value = {"posts", "postCount"}, allowSetters = true)	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "profile_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
-	private Profile profile;
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
+	private User user;
 	
 	@Column(length = 700)
 	private String caption;
@@ -88,11 +88,11 @@ public class Post implements Serializable {
 	
 	}
 
-	public Post(long id, String postCode, Profile profile, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
+	public Post(long id, String postCode, User user, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
 			Place place) {
 		this.id = id;
 		this.postCode = postCode;
-		this.profile = profile;
+		this.user = user;
 		this.caption = caption;
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
@@ -102,11 +102,11 @@ public class Post implements Serializable {
 		this.medias = null;
 	}
 
-	public Post(long id, String postCode, Profile profile, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
+	public Post(long id, String postCode, User user, String caption, int likeCount, int commentCount, long createdAt, boolean isNotArchived,
 			Place place, Set<Media> medias) {
 		this.id = id;
 		this.postCode = postCode;
-		this.profile = profile;
+		this.user = user;
 		this.caption = caption;
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
@@ -132,12 +132,12 @@ public class Post implements Serializable {
 		this.postCode = postCode;
 	}
 
-	public Profile getProfile() {
-		return profile;
+	public User getUser() {
+		return user;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getCaption() {
