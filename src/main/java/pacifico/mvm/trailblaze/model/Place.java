@@ -56,10 +56,14 @@ public class Place implements Serializable {
 	@JsonIgnoreProperties({"place"})
 	@OneToMany(mappedBy = "place")
 	private List<Rate> rates;
-	
+
 	@JsonIgnoreProperties({"place"})
 	@OneToMany(mappedBy = "place")
 	private List<Post> posts;
+
+	@JsonIgnoreProperties({"place"})
+	@OneToMany(mappedBy = "place")
+	private List<UserPlaceClassification> classifications;
 	
 	public Place() {
 	
@@ -124,6 +128,14 @@ public class Place implements Serializable {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public List<UserPlaceClassification> getClassifications() {
+		return classifications;
+	}
+
+	public void setClassifications(List<UserPlaceClassification> classifications) {
+		this.classifications = classifications;
 	}
 
 	@Override

@@ -1,8 +1,9 @@
 package pacifico.mvm.trailblaze.model;
 
-public enum Classify {
+public enum PlaceClassification {
+	WANT_TO_GO,
 	AMAZING,
+	GOOD,
 	DISAPPOINTING,
-	I_WANT,
-	I_HATED
+	HATED
 }

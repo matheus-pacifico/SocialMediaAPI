@@ -108,6 +108,10 @@ public class User implements Serializable {
 	@JsonIgnoreProperties(value = {"user"}, allowSetters = true)
 	@OneToMany(mappedBy = "user")
 	private List<SavedPlace> savedPlaces = new ArrayList<>();
+
+	@JsonIgnoreProperties(value = {"user"}, allowSetters = true)
+	@OneToMany(mappedBy = "user")
+	private List<UserPlaceClassification> placeClassifications = new ArrayList<>();
 	
 	@JsonIgnoreProperties(value = {"user"})
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -295,6 +299,14 @@ public class User implements Serializable {
 
 	public void setSavedPlaces(List<SavedPlace> savedPlaces) {
 		this.savedPlaces = savedPlaces;
+	}
+
+	public List<UserPlaceClassification> getPlaceClassifications() {
+		return placeClassifications;
+	}
+
+	public void setPlaceClassifications(List<UserPlaceClassification> placeClassifications) {
+		this.placeClassifications = placeClassifications;
 	}
 
 	@Override
