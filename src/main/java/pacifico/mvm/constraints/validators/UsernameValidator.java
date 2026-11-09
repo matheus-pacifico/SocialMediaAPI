@@ -12,12 +12,11 @@ import pacifico.mvm.constraints.Username;
 public class UsernameValidator implements ConstraintValidator<Username, CharSequence> {
 	
 	// Violation messages
-	private static final String BLANK_USERNAME = "username cannot be blank.";
-	private static final String CHAR_NOT_ALLOWED = "username can only use lowercase letters, numbers, underscores and periods.";
-	private static final String TOO_LONG = "username can be a maximum of 30 characters.";
-	private static final String CONSECUTIVE_PERIODS = "username cannot have more than one period in a row.";
-	private static final String START_WITH_PERIOD = "username cannot start with a period.";
-	private static final String END_WITH_PERIOD = "username cannot end with a period.";
+	private static final String CHAR_NOT_ALLOWED = "username can only use lowercase letters, numbers, underscores and periods";
+	private static final String TOO_LONG = "username can be a maximum of 30 characters";
+	private static final String CONSECUTIVE_PERIODS = "username cannot have more than one period in a row";
+	private static final String START_WITH_PERIOD = "username cannot start with a period";
+	private static final String END_WITH_PERIOD = "username cannot end with a period";
 	
 	private static final Set<String> RESERVED_WORDS;
 	
@@ -30,10 +29,9 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
     
 	@Override
 	public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-		if (value == null || value.isEmpty()) {
-			buildConstraintViolationWithTemplate(context, BLANK_USERNAME);
-			return false;
-		}
+		if (value == null) {
+            return true;
+        }
 		if (value.length() > 30) {
 			buildConstraintViolationWithTemplate(context, TOO_LONG);
 			return false;
@@ -45,7 +43,7 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 	}
 
 	public static boolean containsNotAllowedCharacter(CharSequence str, ConstraintValidatorContext context) {
-		if (theFirstCharacterIsADotOrIsNotAllowed(str.charAt(0), context)) {
+		if (theFirstCharacterIsADotOrNotAllowed(str.charAt(0), context)) {
 			return true; 
 		}
 		boolean thisCharIsPrecededByDot = false;
@@ -71,7 +69,7 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 		return thisCharIsPrecededByDot;
 	}
 	
-	private static boolean theFirstCharacterIsADotOrIsNotAllowed(int ch, ConstraintValidatorContext context) {
+	private static boolean theFirstCharacterIsADotOrNotAllowed(int ch, ConstraintValidatorContext context) {
 		if (ch == '.') {
 			buildConstraintViolationWithTemplate(context, START_WITH_PERIOD);
 			return true;
@@ -128,7 +126,6 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 			"backup",
 			"banner",
 			"banners",
-			"beta",
 			"bin",
 			"collection",
 			"collections",
@@ -175,6 +172,8 @@ public class UsernameValidator implements ConstraintValidator<Username, CharSequ
 			"save",
 			"saved",
 			"saves",
+			"sign",
+			"signup",
 			"support",
 			"tag",
 			"tags",
